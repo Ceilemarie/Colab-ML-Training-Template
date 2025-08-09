@@ -1,0 +1,71 @@
+# ===========================
+# STEP 1: Check GPU
+# ===========================
+!nvidia-smi
+
+# ===========================
+# STEP 2: Mount Google Drive
+# ===========================
+from google.colab import drive
+drive.mount('/content/drive')
+
+# ===========================
+# STEP 3: Install ML Libraries
+# ===========================
+!pip install tensorflow torch torchvision torchaudio scikit-learn pandas matplotlib
+
+# ===========================
+# STEP 4: Import Libraries
+# ===========================
+import torch
+import tensorflow as tf
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+
+print("PyTorch version:", torch.__version__)
+print("TensorFlow version:", tf.__version__)
+
+# ===========================
+# STEP 5: Set Paths
+# ===========================
+# Palitan mo yung 'ML_Projects' kung gusto mo ibang folder name
+import os
+project_path = '/content/drive/MyDrive/ML_Projects'
+os.makedirs(project_path, exist_ok=True)
+print(f"Project folder: {project_path}")
+
+# ===========================
+# STEP 6: Sample Model Training (TensorFlow)
+# ===========================
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+# Sample dummy data
+X = np.random.rand(1000, 10)
+y = np.random.randint(0, 2, size=(1000,))
+
+# Simple neural network
+model = Sequential([
+    Dense(64, activation='relu', input_shape=(10,)),
+    Dense(32, activation='relu'),
+    Dense(1, activation='sigmoid')
+])
+
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+history = model.fit(X, y, epochs=5, batch_size=32, validation_split=0.2)
+
+# ===========================
+# STEP 7: Save Model Checkpoint
+# ===========================
+model_save_path = os.path.join(project_path, 'model_checkpoint.h5')
+model.save(model_save_path)
+print(f"Model saved at: {model_save_path}")
+
+# ===========================
+# STEP 8: Load Model (Optional)
+# ===========================
+from tensorflow.keras.models import load_model
+loaded_model = load_model(model_save_path)
+print("Model loaded successfully!")
