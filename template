@@ -30,7 +30,7 @@ print("TensorFlow version:", tf.__version__)
 # ===========================
 # STEP 5: Set Paths
 # ===========================
-# Palitan mo yung 'ML_Projects' kung gusto mo ibang folder name
+
 import os
 project_path = '/content/drive/MyDrive/ML_Projects'
 os.makedirs(project_path, exist_ok=True)
